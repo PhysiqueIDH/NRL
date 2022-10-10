@@ -19,10 +19,9 @@ import pandas as pd
 dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
 # dir=r"C:\test_NRI\spyder"
 os.chdir(dir)
-from fig_interactive import fig_int
+from fig_interactive_GENERAL import fig_int_GENERAL
 from fig_interactive_ampli_med import fig_int_ampli_med
 from fig_interactive_ampli_salle import fig_int_ampli_salle
-from fig_interactive_interv import fig_int_int
 # from fig_interactive_interv2 import fig_int_int2
 # from fig_interactive_global import fig_int_int
 #
@@ -36,20 +35,24 @@ fil='ALL_BLOC_CICI_2014-2022_RX.xlsx'
 sheet='Sheet1'
 df= pd.read_excel (fil, sheet)
 df=df.drop("Unnamed: 0",axis=1)
-year=2021
+# year=2021
 # ampli='CIOS'
 # interv='Cimentoplastie'
 
 
-#doses all ampli
-column='MOTIF_corr'
-column='CATEGORY'
-val='nbtotal'
-val='moyenne Gycm2'
-# stats=fig_int_int(df, year, column)
-# stats=fig_int_int(df, year, interv)
+# #doses all ampli
+# # column='MOTIF_corr'
+# # column='CATEGORY'
+# # val='nbtotal'
+# # val='moyenne Gycm2'
+# # stats=fig_int_int(df, year, interv)
 # stats=fig_int(df, year)
-stats=fig_int(df, year, 'AMPLI', 'CATEGORY')
+
+
+
+year=[2022, 2022]
+# stats=fig_int_GENERAL(df, year, 'AMPLI', 'CATEGORY')
+stats=fig_int_GENERAL(df, year, 'SALLE', 'AMPLI')
 #
 pie_nb(stats, year)
 # http://127.0.0.1:8050/

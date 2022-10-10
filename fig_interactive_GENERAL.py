@@ -19,7 +19,7 @@ Created on Tue Mar  8 13:02:09 2022
 @author: sorgato
 """     
         
-def fig_int_GENERAL (df, year, interv=None, param1, param2):
+def fig_int_GENERAL (df, year, param1, param2, interv=None):
     import plotly.graph_objs as go
     import plotly.io as pio
     import numpy as np
@@ -42,9 +42,9 @@ def fig_int_GENERAL (df, year, interv=None, param1, param2):
             return "AMPLI"
         elif parameter == "CATEGORY":
             return "CATEGORY"
-        elif lang == "SALLE":
+        elif parameter == "SALLE":
             return "SALLE"
-        elif lang == "NOMPRATICIEN":
+        elif parameter == "NOMPRATICIEN":
             return "NOMPRATICIEN"
 
 
@@ -57,31 +57,32 @@ def fig_int_GENERAL (df, year, interv=None, param1, param2):
     fig3 = go.Figure()
     fig4 = go.Figure()
 
-    stats = pd.DataFrame([], columns=['annee', switch(param1), switch(param2), 'nbtotal', 'moyenne Gycm2', 'ecartType', 'median Gycm2', '75%centile'])
+    stats= pd.DataFrame([], columns=['Annee', switch(param1), switch(param2), 'Nbtotal', 'Moyenne Gycm2', 'EcartType', 'Median Gycm2'])
+                        # , '75%centile'])
     stats_list = []
 
     buttons1 = []
     i = 0
-    ampli_list = list(mat_i[switch(param1)].unique())
+    button_list = list(mat_i[switch(param1)].unique())
 
     t_curves = 0
-    for ampli in ampli_list:
-        mat = mat_i[mat_i['AMPLI'] == ampli]
-        cat_list = list(mat['CATEGORY'].unique())
-        t_curves += len(cat_list)
+    for button in button_list:
+        mat = mat_i[mat_i[switch(param1)] == button]
+        legend_list = list(mat[switch(param2)].unique())
+        t_curves += len(legend_list)
     args = [False] * t_curves
 
     l_curve = 0
-    for ampli in ampli_list:
+    for button in button_list:
 
         mat = []
-        mat = mat_i[mat_i['AMPLI'] == ampli]
+        mat = mat_i[mat_i[switch(param1)] == button]
 
-        cat_list = []
-        cat_list = list(mat['CATEGORY'].unique())
-        for cat in cat_list:
+        legend_list = []
+        legend_list = list(mat[switch(param2)].unique())
+        for leg in legend_list:
             matint = []
-            matint = mat['DATEINTERV'][mat['CATEGORY'] == cat]
+            matint = mat['DATEINTERV'][mat[switch(param2)] == leg]
             t = matint.dt.date.value_counts()
             tch = pd.to_datetime(t.index[t > 1])
             for tst in matint:
@@ -92,28 +93,28 @@ def fig_int_GENERAL (df, year, interv=None, param1, param2):
 
                     mat['DATEINTERV'].loc[st.index] = pd.to_datetime(st)
 
-            yy = mat['DOSE Gycm2'][mat['CATEGORY'] == cat]
+            yy = mat['DOSE Gycm2'][mat[switch(param2)] == leg]
 
             stats_list.append(
-                [year, ampli, interv, len(yy), round(yy.mean(), 3), round(yy.std(), 3), round(yy.median(), 3),
-                 round(np.percentile(yy, 75), 3)])
+                [year, button, leg, len(yy), round(yy.mean(), 3), round(yy.std(), 3), round(yy.median(), 3)])
+                 # , round(np.percentile(yy, 75), 3)])
 
             fig3.add_trace(
                 go.Scatter(
-                    x=mat['DATEINTERV'][mat['CATEGORY'] == cat],
+                    x=mat['DATEINTERV'][mat[switch(param2)] == leg],
                     y=yy,
-                    # y = mat['TEMPS (s)'][mat['CATEGORY']==cat],
-                    # name = [cat, mat['IPP'][mat['CATEGORY']==cat]], visible = (i==1)))
-                    name=cat, visible=(i == 0)))
+                    # y = mat['TEMPS (s)'][mat[switch(param2)]==leg],
+                    # name = [leg, mat['IPP'][mat[switch(param2)]==leg]], visible = (i==1)))
+                    name=leg, visible=(i == 0)))
 
         args = [False] * t_curves
-        args[l_curve:i * len(cat_list) + len(cat_list)] = [True] * len(cat_list)
-        # args[l_curve:len(cat_list)+l_curve] = [True] * len(cat_list) #also works
+        args[l_curve:i * len(legend_list) + len(legend_list)] = [True] * len(legend_list)
+        # args[l_curve:len(legend_list)+l_curve] = [True] * len(legend_list) #also works
         # i is an iterable used to tell our "args" list which value to set to True
         i += 1
-        l_curve += len(cat_list)
+        l_curve += len(legend_list)
 
-        button1 = dict(label=ampli,
+        button1 = dict(label=button,
                        method="update",
                        args=[{"visible": args}])
         buttons1.append(button1)
@@ -137,7 +138,7 @@ def fig_int_GENERAL (df, year, interv=None, param1, param2):
         autosize=True,
         # width=1000,
         # height=800,
-        title_text="NRL année " + str(year) + ', ' + str(interv),
+        title_text="NRL année " + str(year) + ', ',
         title_x=0.5)
 
     fig3.update_layout(
@@ -147,56 +148,56 @@ def fig_int_GENERAL (df, year, interv=None, param1, param2):
 
     fig3.show()
 
-    ytot = mat_i['DOSE Gycm2']
-    stats_list.append(
-        [year, 'TOTAL', interv, len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),
-         round(np.percentile(ytot, 75), 3)])
-    stats = pd.DataFrame(stats_list)
-    stats.columns = ['annee', 'ampli', 'intervention', 'nbtotal', 'moyenne Gycm2', 'ecartType', 'median', '75%centile']
+    # ytot = mat['DOSE Gycm2']
+    # stats_list.append([year, button, 'TOTAL', len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),
+    #      round(np.percentile(ytot, 75), 3)])
+    stats= pd.DataFrame(stats_list)
+    stats.columns = ['Annee', switch(param1), switch(param2), 'Nbtotal', 'Moyenne Gycm2', 'EcartType','Median Gycm2']
+    # , '75%centile']
 
     ##table with mean, std, median, 75% percentile
     stats_cols = stats.columns[-8:]
-    stats_cat = pd.DataFrame(stats[stats_cols])
+    stats_leg = pd.DataFrame(stats[stats_cols])
     fig4 = go.Figure(go.Table(
         columnwidth=[80, 50],
         header=dict(values=list(stats_cols),
                     fill_color='paleturquoise',
                     align='left'),
-        cells={"values": stats_cat.T.values},
+        cells={"values": stats_leg.T.values},
         # fill_color='white',
         # align='left'
         # visible = True
     ))
 
-    # fig3 = go.Figure(go.Table(header={"values": stats_cols}, cells={"values": stats_cat.T.values}))
+    # fig3 = go.Figure(go.Table(header={"values": stats_cols}, cells={"values": stats_leg.T.values}))
     fig4.update_layout(
         updatemenus=[
             {
                 "y": 1 - (i / 5),
                 "buttons": [
                     {
-                        "label": ampli,
+                        "label": button,
                         "method": "restyle",
                         "args": [
                             {
                                 "cells": {
-                                    "values": stats_cat.loc[stats_cat[menu].eq(ampli)].T.values
-                                    # if cat == "All"
-                                    # else  stats_cat.loc[stats_cat[menu].eq(c)].T.values
+                                    "values": stats_leg.loc[stats_leg[menu].eq(button)].T.values
+                                    # if leg == "All"
+                                    # else  stats_leg.loc[stats_leg[menu].eq(c)].T.values
                                 }
                             }
                         ],
                     }
-                    for ampli in stats_cat[menu].unique().tolist()
+                    for button in stats_leg[menu].unique().tolist()
                 ],
             }
-            for i, menu in enumerate(["ampli"])
+            for i, menu in enumerate([switch(param1)])
         ]
     )
 
     fig4.show()
 
-    fig3.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" + interv + ".html")
-    fig4.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" + interv + "_stats.html")
+    fig3.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+".html")
+    fig4.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+ "_stats.html")
 
-    return stats  
+    return stats 
