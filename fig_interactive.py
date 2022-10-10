@@ -12,12 +12,10 @@ Created on Tue Mar  8 13:02:09 2022
 @author: sorgato
 """     
         
-def fig_int (df, year):
+def fig_int (df, year, arg1, arg2):
     import plotly.graph_objs as go
     import plotly.io as pio
     import numpy as np
-    from datetime import timedelta 
-    from datetime import datetime 
     import pandas as pd
     from plotly.subplots import make_subplots
     # pio.renderers.default = 'svg'

@@ -37,8 +37,8 @@ sheet='Sheet1'
 df= pd.read_excel (fil, sheet)
 df=df.drop("Unnamed: 0",axis=1)
 year=2021
-ampli='CIOS'
-interv='Cimentoplastie'
+# ampli='CIOS'
+# interv='Cimentoplastie'
 
 
 #doses all ampli
@@ -48,7 +48,8 @@ val='nbtotal'
 val='moyenne Gycm2'
 # stats=fig_int_int(df, year, column)
 # stats=fig_int_int(df, year, interv)
-stats=fig_int(df, year)
+# stats=fig_int(df, year)
+stats=fig_int(df, year, 'AMPLI', 'CATEGORY')
 #
 pie_nb(stats, year)
 # http://127.0.0.1:8050/
