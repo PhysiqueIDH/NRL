@@ -19,7 +19,7 @@ Created on Tue Mar  8 13:02:09 2022
 @author: sorgato
 """     
         
-def fig_int_GENERAL (df, year, param1, param2, interv=None):
+def fig_int_GENERAL(df, year, param1, param2, interv=None):
     import plotly.graph_objs as go
     import plotly.io as pio
     import numpy as np
@@ -197,7 +197,7 @@ def fig_int_GENERAL (df, year, param1, param2, interv=None):
 
     fig4.show()
 
-    fig3.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+".html")
-    fig4.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+ "_stats.html")
+    # fig3.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+".html")
+    # fig4.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+ "_stats.html")
 
     return stats 

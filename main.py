@@ -17,17 +17,17 @@ import os
 import pandas as pd
 
 # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
-dir=r"C:\NRL\Fork"
+dir=r"C:\NRL\Fork\NRL"
 os.chdir(dir)
-from fig_interactive_GENERAL import fig_int_GENERAL
-from fig_interactive_ampli_med import fig_int_ampli_med
-from fig_interactive_ampli_salle import fig_int_ampli_salle
+from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
+# from fig_interactive_ampli_med import fig_int_ampli_med
+# from fig_interactive_ampli_salle import fig_int_ampli_salle
 # from fig_interactive_interv2 import fig_int_int2
 # from fig_interactive_global import fig_int_int
 #
 # from pie_nbtotal import pie_nb
-from pie_medecins import pie_nb
-import pie_medecins
+# from pie_medecins import pie_nb
+from pie_GENERAL import pie_GENERAL
 
 # dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
 dir=r"C:\NRL\EXTRACTION"
@@ -53,21 +53,24 @@ df=df.drop("Unnamed: 0",axis=1)
 
 year=[2022, 2022]
 # stats=fig_int_GENERAL(df, year, 'AMPLI', 'CATEGORY')
-stats=fig_int_GENERAL(df, year, 'SALLE', 'AMPLI')
+# stats=fig_int_GENERAL(df, year, 'SALLE', 'AMPLI')
+# stats=fig_int_GENERAL(df, year, 'NOMPRATICIEN', 'CATEGORY')
+# stats=fig_int_GENERAL(df, year, 'NOMPRATICIEN', 'AMPLI')
+stats=fig_int_GENERAL(df, year, 'AMPLI', 'NOMPRATICIEN')
 #
-pie_nb(stats, year)
+pie_GENERAL(stats, year,'AMPLI', 'NOMPRATICIEN')
 # http://127.0.0.1:8050/
 #
 #
-# #doses 1 intervention
-interv='Cimentoplastie'
-interv='pose CCI'
-interv='Picc line'
-interv='Pacemaker simple'
-interv='Pacemaker double'
-year=[2014, 2020]
-stats=fig_int_int(df, year, interv)
-#
+# # #doses 1 intervention
+# interv='Cimentoplastie'
+# interv='pose CCI'
+# interv='Picc line'
+# interv='Pacemaker simple'
+# interv='Pacemaker double'
+# year=[2014, 2020]
+# stats=fig_int_int(df, year, interv)
+# #
 #
 # #medecins
 # stats_med=fig_int_ampli_med(df, year)
