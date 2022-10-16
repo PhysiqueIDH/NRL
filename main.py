@@ -16,8 +16,8 @@
 import os
 import pandas as pd
 
-dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
-# dir=r"C:\test_NRI\spyder"
+# dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
+dir=r"C:\NRL\Fork"
 os.chdir(dir)
 from fig_interactive_GENERAL import fig_int_GENERAL
 from fig_interactive_ampli_med import fig_int_ampli_med
@@ -29,7 +29,8 @@ from fig_interactive_ampli_salle import fig_int_ampli_salle
 from pie_medecins import pie_nb
 import pie_medecins
 
-dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
+# dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
+dir=r"C:\NRL\EXTRACTION"
 os.chdir(dir)
 fil='ALL_BLOC_CICI_2014-2022_RX.xlsx'
 sheet='Sheet1'
