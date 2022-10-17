@@ -43,26 +43,36 @@ df=df.drop("Unnamed: 0",axis=1)
 
 # #doses all ampli
 # # column='MOTIF_corr'
-# # column='CATEGORY'
+column='CATEGORY'
 # # val='nbtotal'
 # # val='moyenne Gycm2'
 # # stats=fig_int_int(df, year, interv)
 # stats=fig_int(df, year)
 
 
-
+# Plot interactive
 year=[2022, 2022]
-# stats=fig_int_GENERAL(df, year, 'AMPLI', 'CATEGORY')
-# stats=fig_int_GENERAL(df, year, 'SALLE', 'AMPLI')
-# stats=fig_int_GENERAL(df, year, 'NOMPRATICIEN', 'CATEGORY')
-# stats=fig_int_GENERAL(df, year, 'NOMPRATICIEN', 'AMPLI')
-stats=fig_int_GENERAL(df, year, 'AMPLI', 'NOMPRATICIEN')
+param1='AMPLI'
+param2='NOMPRATICIEN'
+dir=r"C:\NRL\Fork\results"
+os.chdir(dir)
 #
-pie_GENERAL(stats, year,'AMPLI', 'NOMPRATICIEN')
-# http://127.0.0.1:8050/
+# # calculate stats+interactive plots OK
+# stats=fig_int_GENERAL(df, year, param1, param2)
+# stats.to_excel('stats.xlsx', sheet_name='Feuil1')
+
+# read stats + pie plot
+stats=pd.read_excel ('stats.xlsx', 'Feuil1')
+# stats=stats.drop(stats.columns[[0,1]], axis=1)
+import plotly.express as px
+df = px.data.tips()
+df.to_excel('px.xlsx', sheet_name='Feuil1')
+what='Nbtotal'
+pie_GENERAL(stats, what)
+# # http://127.0.0.1:8005/
+# #
 #
-#
-# # #doses 1 intervention
+# # #doses 1 intervention all this works!
 # interv='Cimentoplastie'
 # interv='pose CCI'
 # interv='Picc line'
@@ -74,7 +84,8 @@ pie_GENERAL(stats, year,'AMPLI', 'NOMPRATICIEN')
 #
 # #medecins
 # stats_med=fig_int_ampli_med(df, year)
-# pie_nb(stats_med, year)
+# pie_nb(stats, 2022, column)
+# http://127.0.0.1:8050/
 #
 # #je suis rest�e l�
 # stats_salle=fig_int_ampli_salle(df, year)
@@ -94,3 +105,4 @@ pie_GENERAL(stats, year,'AMPLI', 'NOMPRATICIEN')
 #
 # #### graphiques varies
 # # graphiques_varies.py voir!!
+

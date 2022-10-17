@@ -6,84 +6,49 @@ Created on Mon Mar 21 11:07:57 2022
 
 @author: sorgato
 """
-def pie_GENERAL(stats, year, param1, param2, interv=None):
-    from dash import Dash, dcc, html, Input, Output
-    import plotly.express as px
-    import os
+def pie_GENERAL(stats, what):
+    from dash import Dash, dcc, html
+    # import dash_core_components as dcc
+    # import dash_html_components as html
     import pandas as pd
-    
-    app = Dash(__name__)
-    
-    
-    # dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\spyder" 
-    # os.chdir(dir)
-    # df_pie=pd.read_excel ('stats_cat.xlsx', 'Feuil1')
+    import plotly.express as px
+    from dash.dependencies import Input, Output
+
     df_pie=stats
-    
+
+    param1=df_pie.columns[2]
+    param2=df_pie.columns[3]
+
+    list_param=df_pie[param1].unique()
+
+    app = Dash(__name__)
+
     app.layout = html.Div([
         html.Div([
-    
-            html.Div([
-                dcc.Dropdown(
-                    df_pie[param1].unique(), 'VARIC', id=param1),], style={'width': '10%', 'display': 'inline-block'}),
-    
-            # html.Div([
-            #     dcc.Dropdown(
-            #         df['Indicator Name'].unique(),
-            #         'Life expectancy at birth, total (years)',
-            #         id='yaxis-column'
-            #     ),
-            #     dcc.RadioItems(
-            #         ['Linear', 'Log'],
-            #         'Linear',
-            #         id='yaxis-type',
-            #         inline=True
-            #     )
-            # ], style={'width': '48%', 'float': 'right', 'display': 'inline-block'})
+            html.H4(['Distribution '+param1+' - '+param2]),
+            dcc.Graph(id="graph"),
+            html.P(param1+" :"),
+            dcc.Dropdown(
+                  id='names',
+                  options=[{'label': y, 'value': y} for y in list_param],
+                  value=list_param[0],
+                  multi=False,
+                  clearable=False,
+                  style={"width": "50%"}
+            )
         ]),
-    
-        dcc.Graph(id='pie'),
-    
-        # dcc.Slider(
-        #     df['Year'].min(),
-        #     df['Year'].max(),
-        #     step=None,
-        #     id='year--slider',
-        #     value=df['Year'].max(),
-        #     marks={str(year): str(year) for year in df['Year'].unique()},
-    
-        # )
+
+
     ])
-    
-    
+
     @app.callback(
-        Output('pie', 'figure'),
-        Input(param1, 'value'),
-        # Input('yaxis-column', 'value'),
-        # Input('xaxis-type', 'value'),
-        # Input('yaxis-type', 'value'),
-        # Input('year--slider', 'value')
-        )
-    def update_graph(ampli):
-        # dff = df[df['Year'] == year_value]
-        fig = px.pie(df_pie[df_pie[param1]==ampli], values='nbtotal', names=param2, title=['Distribution -'+param1+'-'+param2])
-                     
-                     # x=dff[dff['Indicator Name'] == xaxis_column_name]['Value'],
-                     #     y=dff[dff['Indicator Name'] == yaxis_column_name]['Value'],
-                     #     hover_name=dff[dff['Indicator Name'] == yaxis_column_name]['Country Name'])
-    
-        # fig.update_layout(title_x=0.5)
-        fig.update_layout(title_text= str(year), margin={'l': 0, 'b': 0, 't': 100, 'r': 0}, hovermode='closest', title_x=0.5, height=500)
-    
-        # fig.update_xaxes(title=xaxis_column_name,
-        #                  type='linear' if xaxis_type == 'Linear' else 'log')
-    
-        # fig.update_yaxes(title=yaxis_column_name,
-        #                  type='linear' if yaxis_type == 'Linear' else 'log')
-    
+        Output("graph", "figure"),
+        Input("names", "value"))
+    def generate_chart(names):
+        df = stats  # replace with your own data source
+        fig = px.pie(df, names=names, hole=.3)
         return fig
-    
-    
+
     if __name__ == '__main__':
-        app.run_server(debug=False)
-        
+        app.run_server(host='localhost', port=8005)
+
