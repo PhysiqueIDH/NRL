@@ -17,8 +17,8 @@ import os
 import pandas as pd
 
 # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
-dir=r"C:\NRL\Fork\NRL"
-os.chdir(dir)
+# dir=r"C:\NRL\Fork\NRL"
+# os.chdir(dir)
 from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
 # from fig_interactive_ampli_med import fig_int_ampli_med
 # from fig_interactive_ampli_salle import fig_int_ampli_salle
@@ -30,12 +30,12 @@ from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
 from pie_GENERAL import pie_GENERAL
 
 # dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
-dir=r"C:\NRL\EXTRACTION"
-os.chdir(dir)
-fil='ALL_BLOC_CICI_2014-2022_RX.xlsx'
-sheet='Sheet1'
-df= pd.read_excel (fil, sheet)
-df=df.drop("Unnamed: 0",axis=1)
+# dir=r"C:\NRL\EXTRACTION"
+# os.chdir(dir)
+# fil='ALL_BLOC_CICI_2014-2022_RX.xlsx'
+# sheet='Sheet1'
+# df= pd.read_excel (fil, sheet)
+# df=df.drop("Unnamed: 0",axis=1)
 # year=2021
 # ampli='CIOS'
 # interv='Cimentoplastie'
@@ -43,7 +43,7 @@ df=df.drop("Unnamed: 0",axis=1)
 
 # #doses all ampli
 # # column='MOTIF_corr'
-column='CATEGORY'
+# column='CATEGORY'
 # # val='nbtotal'
 # # val='moyenne Gycm2'
 # # stats=fig_int_int(df, year, interv)
@@ -64,9 +64,9 @@ os.chdir(dir)
 # read stats + pie plot
 stats=pd.read_excel ('stats.xlsx', 'Feuil1')
 # stats=stats.drop(stats.columns[[0,1]], axis=1)
-import plotly.express as px
-df = px.data.tips()
-df.to_excel('px.xlsx', sheet_name='Feuil1')
+# import plotly.express as px
+# df = px.data.tips()
+# df.to_excel('px.xlsx', sheet_name='Feuil1')
 what='Nbtotal'
 pie_GENERAL(stats, what)
 # # http://127.0.0.1:8005/

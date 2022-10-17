@@ -35,7 +35,12 @@ def pie_GENERAL(stats, what):
                   multi=False,
                   clearable=False,
                   style={"width": "50%"}
-            )
+            ),
+            html.P("Values:"),
+            dcc.Dropdown(id='values',
+                         options=what,
+                         value='Nbtotal', clearable=False
+                         ),
         ]),
 
 
@@ -43,10 +48,11 @@ def pie_GENERAL(stats, what):
 
     @app.callback(
         Output("graph", "figure"),
-        Input("names", "value"))
-    def generate_chart(names):
+        Input("names", "value"),
+        Input("values", "value"))
+    def generate_chart(names, values):
         df = stats  # replace with your own data source
-        fig = px.pie(df, names=names, hole=.3)
+        fig = px.pie(df,  values=values, names=names, hole=.3)
         return fig
 
     if __name__ == '__main__':
