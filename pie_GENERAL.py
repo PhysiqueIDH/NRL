@@ -15,7 +15,6 @@ def pie_GENERAL(stats, what):
     from dash.dependencies import Input, Output
 
     df_pie=stats
-
     param1=df_pie.columns[2]
     param2=df_pie.columns[3]
 
@@ -31,14 +30,14 @@ def pie_GENERAL(stats, what):
             dcc.Dropdown(
                   id='names',
                   options=[{'label': y, 'value': y} for y in list_param],
-                  value=list_param[0],
+                  value='test',
                   multi=False,
                   clearable=False,
                   style={"width": "50%"}
             ),
             html.P("Values:"),
             dcc.Dropdown(id='values',
-                         options=what,
+                         options=['Nbtotal','Moyenne Gycm2'],
                          value='Nbtotal', clearable=False
                          ),
         ]),
@@ -50,10 +49,20 @@ def pie_GENERAL(stats, what):
         Output("graph", "figure"),
         Input("names", "value"),
         Input("values", "value"))
-    def generate_chart(names, values):
-        df = stats  # replace with your own data source
-        fig = px.pie(df,  values=values, names=names, hole=.3)
-        return fig
+
+    def update_graph(P1):
+        piechart = px.pie(
+            df_pie[df_pie[param1] == P1],
+            values=what,
+            names=param2,
+            hole=.3,
+        )
+        return piechart
+
+    # def generate_chart(names, values):
+    #     df = stats  # replace with your own data source
+    #     fig = px.pie(df,  values=values, names=names, hole=.3)
+    #     return fig
 
     if __name__ == '__main__':
         app.run_server(host='localhost', port=8005)

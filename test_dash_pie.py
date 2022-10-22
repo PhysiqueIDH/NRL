@@ -93,4 +93,4 @@ from dash import Dash, dcc, html
 
 
     # if __name__ == '__main__':
-    app.run_server(host='localhost', port=8005)
+    app.run_server(host='localhost', port=8006)
