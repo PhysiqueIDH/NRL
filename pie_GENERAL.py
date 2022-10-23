@@ -4,9 +4,8 @@ Created on Mon Mar 21 11:07:57 2022
 
 @author: sorgato
 """
-def pie_GENERAL(stats):
+def pie_GENERALf(stats):
     from dash import Dash, dcc, html
-    import pandas as pd
     import plotly.express as px
     from dash.dependencies import Input, Output
 
@@ -48,8 +47,6 @@ def pie_GENERAL(stats):
 
     ])
 
-
-
     @app.callback(
         Output("graph", "figure"),
         Input("p1", "value"),
@@ -58,9 +55,10 @@ def pie_GENERAL(stats):
 
     def update_graph(p1, p2, values):
         df = df_pie[df_pie[param1] == p1]
-        fig = px.pie(df,  values=values, names=p2, hole=.3)
+        fig = px.pie(df,  values=values, names=p2, hole=.1)
+        fig.update_layout(margin={'l': 0, 'b': 10, 't': 10, 'r': 0}, hovermode='closest', title_x=0.5, height=600)
+        fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=10)
         return fig
-
 
     if __name__ == '__main__':
         app.run_server(host='localhost', port=8005)
