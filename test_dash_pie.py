@@ -1,62 +1,63 @@
 from dash import Dash, dcc, html
-    # import dash_core_components as dcc
-    # import dash_html_components as html
-    import pandas as pd
-    import plotly.express as px
-    from dash.dependencies import Input, Output
-    data = {'labels': ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
-            'parents': ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"],
-            'values': [10, 14, 12, 10, 2, 6, 6, 4, 4]}
+# import dash_core_components as dcc
+# import dash_html_components as html
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from dash.dependencies import Input, Output
+data = {'labels': ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
+        'parents': ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"],
+        'values': [10, 14, 12, 10, 2, 6, 6, 4, 4]}
 
-    # Creates pandas DataFrame.
-    df_pie = pd.DataFrame(data)
-    df = px.data.tips()
-    fig = px.pie(df, values='tip', names='day')
-    fig.show()
+# Creates pandas DataFrame.
+df_pie = pd.DataFrame(data)
+df = px.data.tips()
+fig = px.pie(df, values='tip', names='day')
+fig.show()
 
 
-    # df_pie=stats
-    param1=df_pie.columns[0]
-    param2=df_pie.columns[1]
+# df_pie=stats
+param1=df_pie.columns[0]
+param2=df_pie.columns[1]
 
-    list_param=df_pie[param1].unique().value_counts().index
+list_param=df_pie[param1].unique().value_counts().index
 
-    app = Dash(__name__)
+app = Dash(__name__)
 
-    app.layout = html.Div([
-        html.Div([
-            html.Label(['Distribution actes']),
-            dcc.Dropdown(
-                  id='my_dropdown',
-                  options=[{'label': y, 'value': y} for y in list_param],
-                  value=list_param[0],
-                  multi=False,
-                  clearable=False,
-                  style={"width": "50%"}
-            )
-        ]),
-
-        html.Div([
-            dcc.Graph(id='the_graph')
-        ]),
-
-    ])
-
-    @app.callback(
-        Output(component_id='the_graph', component_property='figure'),
-        [Input(component_id='my_dropdown', component_property='value')]
-    )
-    def update_graph(P1):
-        piechart = px.pie(
-            df_pie[df_pie[param1] == P1],
-            values=what,
-            names=param2,
-            hole=.3,
+app.layout = html.Div([
+    html.Div([
+        html.Label(['Distribution actes']),
+        dcc.Dropdown(
+              id='my_dropdown',
+              options=[{'label': y, 'value': y} for y in list_param],
+              value=list_param[0],
+              multi=False,
+              clearable=False,
+              style={"width": "50%"}
         )
-        return piechart
+    ]),
 
-    if __name__ == '__main__':
-        app.run_server(host='localhost', port=8005)
+    html.Div([
+        dcc.Graph(id='the_graph')
+    ]),
+
+])
+
+@app.callback(
+    Output(component_id='the_graph', component_property='figure'),
+    [Input(component_id='my_dropdown', component_property='value')]
+)
+def update_graph(P1):
+    piechart = px.pie(
+        df_pie[df_pie[param1] == P1],
+        values=what,
+        names=param2,
+        hole=.3,
+    )
+    return piechart
+
+if __name__ == '__main__':
+    app.run_server(host='localhost', port=8004)
 
 
     %%%%%%%%%%%%%%%%%%%%%

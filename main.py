@@ -17,9 +17,9 @@ import os
 import pandas as pd
 
 # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
-# dir=r"C:\NRL\Fork\NRL"
-# os.chdir(dir)
-from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
+dir=r"C:\NRL\Fork\NRL"
+os.chdir(dir)
+# from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
 # from fig_interactive_ampli_med import fig_int_ampli_med
 # from fig_interactive_ampli_salle import fig_int_ampli_salle
 # from fig_interactive_interv2 import fig_int_int2
@@ -36,9 +36,7 @@ from pie_GENERAL import pie_GENERAL
 # sheet='Sheet1'
 # df= pd.read_excel (fil, sheet)
 # df=df.drop("Unnamed: 0",axis=1)
-# year=2021
-# ampli='CIOS'
-# interv='Cimentoplastie'
+
 
 
 # #doses all ampli
@@ -51,25 +49,20 @@ from pie_GENERAL import pie_GENERAL
 
 
 # Plot interactive
-year=[2022, 2022]
-param1='AMPLI'
-param2='NOMPRATICIEN'
+# year=[2022, 2022]
+# param1='AMPLI'
+# param2='NOMPRATICIEN'
 dir=r"C:\NRL\Fork\results"
 os.chdir(dir)
-#
-# # calculate stats+interactive plots OK
+# #
+# # # calculate stats+interactive plots OK
 # stats=fig_int_GENERAL(df, year, param1, param2)
-# stats.to_excel('stats.xlsx', sheet_name='Feuil1')
+# # stats.to_excel('stats.xlsx', sheet_name='Feuil1')
 
 # read stats + pie plot
 stats=pd.read_excel ('stats.xlsx', 'Feuil1')
-# stats=stats.drop(stats.columns[[0,1]], axis=1)
-# import plotly.express as px
-# df = px.data.tips()
-# df.to_excel('px.xlsx', sheet_name='Feuil1')
-what='Nbtotal'
-pie_GENERAL(stats, what)
-# # http://127.0.0.1:8005/
+pie_GENERAL(stats)
+# http://127.0.0.1:8005/
 # #
 #
 # # #doses 1 intervention all this works!

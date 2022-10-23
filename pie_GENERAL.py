@@ -1,36 +1,39 @@
 # -*- coding: utf-8 -*-
-
-# stats=stats_med
 """
 Created on Mon Mar 21 11:07:57 2022
 
 @author: sorgato
 """
-def pie_GENERAL(stats, what):
+def pie_GENERAL(stats):
     from dash import Dash, dcc, html
-    # import dash_core_components as dcc
-    # import dash_html_components as html
     import pandas as pd
     import plotly.express as px
     from dash.dependencies import Input, Output
 
-    df_pie=stats
+    df_pie = stats
+    year=df_pie['Annee'][0]
     param1=df_pie.columns[2]
     param2=df_pie.columns[3]
-
-    list_param=df_pie[param1].unique()
-
+    list_param1=df_pie[param1].unique()
     app = Dash(__name__)
 
     app.layout = html.Div([
         html.Div([
-            html.H4(['Distribution '+param1+' - '+param2]),
+            html.H4(['Distribution '+param1+' - '+param2+', Année:'+year]),
             dcc.Graph(id="graph"),
             html.P(param1+" :"),
             dcc.Dropdown(
-                  id='names',
-                  options=[{'label': y, 'value': y} for y in list_param],
-                  value='test',
+                id='p1',
+                options=[{'label': y, 'value': y} for y in list_param1],
+                value=list_param1[0],
+                multi=False,
+                clearable=False,
+                style={"width": "50%"}
+            ),
+            dcc.Dropdown(
+                  id='p2',
+                  options=param2,
+                  value=param2,
                   multi=False,
                   clearable=False,
                   style={"width": "50%"}
@@ -45,24 +48,19 @@ def pie_GENERAL(stats, what):
 
     ])
 
+
+
     @app.callback(
         Output("graph", "figure"),
-        Input("names", "value"),
+        Input("p1", "value"),
+        Input("p2", "value"),
         Input("values", "value"))
 
-    def update_graph(P1):
-        piechart = px.pie(
-            df_pie[df_pie[param1] == P1],
-            values=what,
-            names=param2,
-            hole=.3,
-        )
-        return piechart
+    def update_graph(p1, p2, values):
+        df = df_pie[df_pie[param1] == p1]
+        fig = px.pie(df,  values=values, names=p2, hole=.3)
+        return fig
 
-    # def generate_chart(names, values):
-    #     df = stats  # replace with your own data source
-    #     fig = px.pie(df,  values=values, names=names, hole=.3)
-    #     return fig
 
     if __name__ == '__main__':
         app.run_server(host='localhost', port=8005)
