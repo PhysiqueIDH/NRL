@@ -15,12 +15,11 @@
 #########################################" Faire ceci car la fusion de toutes les données a déjà été faite!
 import os
 # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
-dir = r"C:\NRL\Fork\NRL"
+dir = "C:\\NRL\\Fork\\NRL"
 os.chdir(dir)
 import pandas as pd
-# from pie_GENERAL import pie_GENERALf as pie_GENERALf
-
-# from fig_interactive_GENERAL import fig_int_GENERAL as fig_int_GENERAL
+from pie_GENERAL import pie_GENERALf
+from fig_interactive_GENERAL import fig_int_GENERAL
 # from fig_interactive_ampli_med import fig_int_ampli_med
 # from fig_interactive_ampli_salle import fig_int_ampli_salle
 # from fig_interactive_interv2 import fig_int_int2
@@ -50,9 +49,9 @@ import pandas as pd
 
 
 # Plot interactive
-# year=[2022, 2022]
-# param1='AMPLI'
-# param2='NOMPRATICIEN'
+year=[2022, 2022]
+param1='AMPLI'
+param2='NOMPRATICIEN'
 dir=r"C:\NRL\Fork\results"
 os.chdir(dir)
 

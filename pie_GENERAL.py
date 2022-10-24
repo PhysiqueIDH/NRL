@@ -4,6 +4,9 @@ Created on Mon Mar 21 11:07:57 2022
 
 @author: sorgato
 """
+
+
+
 def pie_GENERALf(stats):
     from dash import Dash, dcc, html
     import plotly.express as px
@@ -15,6 +18,7 @@ def pie_GENERALf(stats):
     param2=df_pie.columns[3]
     list_param1=df_pie[param1].unique()
     app = Dash(__name__)
+    server = app.server
 
     app.layout = html.Div([
         html.Div([
@@ -56,10 +60,10 @@ def pie_GENERALf(stats):
     def update_graph(p1, p2, values):
         df = df_pie[df_pie[param1] == p1]
         fig = px.pie(df,  values=values, names=p2, hole=.1)
-        fig.update_layout(margin={'l': 0, 'b': 10, 't': 10, 'r': 0}, hovermode='closest', title_x=0.5, height=600)
+        fig.update_layout(margin={'l': 0, 'b': 10, 't': 10, 'r': 10}, hovermode='closest', title_x=0.5, height=500)
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=10)
         return fig
 
-    if __name__ == '__main__':
-        app.run_server(host='localhost', port=8005)
 
+    if __name__ == 'pie_GENERAL':
+        app.run_server(host='localhost', port=8005)
