@@ -5,8 +5,6 @@ Created on Mon Mar 21 11:07:57 2022
 @author: sorgato
 """
 
-
-
 def pie_GENERALf(stats):
     from dash import Dash, dcc, html
     import plotly.express as px
@@ -43,8 +41,8 @@ def pie_GENERALf(stats):
             ),
             html.P("Values:"),
             dcc.Dropdown(id='values',
-                         options=['Nbtotal','Moyenne Gycm2'],
-                         value='Nbtotal', clearable=False
+                         options=['Nbtotal','PKS_moyen(Gycm2)','Temps_moyen(s)'],
+                         value='PKS_moyen(Gycm2)', clearable=False
                          ),
         ]),
 

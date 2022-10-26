@@ -22,6 +22,7 @@ Created on Tue Mar  8 13:02:09 2022
 def fig_int_GENERAL(df, year, param1, param2, interv=None):
     import plotly.graph_objs as go
     import plotly.io as pio
+    import sys
     import numpy as np
     from datetime import timedelta
     from datetime import datetime
@@ -55,15 +56,17 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
 
 # preparation
     fig3 = go.Figure()
+    fig2 = go.Figure()
     fig4 = go.Figure()
 
-    stats= pd.DataFrame([], columns=['Annee', switch(param1), switch(param2), 'Nbtotal', 'Moyenne Gycm2', 'EcartType', 'Median Gycm2'])
-                        # , '75%centile'])
-    stats_list = []
+    stats= pd.DataFrame([], columns=['Annee', switch(param1), switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)','Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)','Median(s)'])
 
+    stats_list = []
+    stats_list1 = []
     buttons1 = []
     i = 0
-    button_list = list(mat_i[switch(param1)].unique())
+    button_l = list(mat_i[switch(param1)].unique())
+    button_list = list(filter(lambda x: str(x) != 'nan' and str(x) != 'null', button_l))
 
     t_curves = 0
     for button in button_list:
@@ -78,8 +81,9 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
         mat = []
         mat = mat_i[mat_i[switch(param1)] == button]
 
-        legend_list = []
-        legend_list = list(mat[switch(param2)].unique())
+
+        legend_l = list(mat[switch(param2)].unique())
+        legend_list = list(filter(lambda x: str(x) != 'nan' and str(x) != 'null', legend_l))
         for leg in legend_list:
             matint = []
             matint = mat['DATEINTERV'][mat[switch(param2)] == leg]
@@ -94,10 +98,12 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                     mat['DATEINTERV'].loc[st.index] = pd.to_datetime(st)
 
             yy = mat['DOSE Gycm2'][mat[switch(param2)] == leg]
+            tt = mat['TEMPS (s)'][mat[switch(param2)] == leg]
 
             stats_list.append(
-                [year, button, leg, len(yy), round(yy.mean(), 3), round(yy.std(), 3), round(yy.median(), 3)])
-                 # , round(np.percentile(yy, 75), 3)])
+                [year, button, leg, len(yy), round(yy.mean(), 3), round(yy.std(), 3), round(yy.median(), 3), round(tt.mean(), 3), round(tt.std(), 3), round(tt.median(), 3)])
+            stats_list1.append(
+                [year, button, leg, len(yy), round(yy.mean(), 3), round(yy.std(), 3), round(yy.median(), 3), round(tt.mean(), 3), round(tt.std(), 3), round(tt.median(), 3)])
 
             fig3.add_trace(
                 go.Scatter(
@@ -105,6 +111,11 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                     y=yy,
                     # y = mat['TEMPS (s)'][mat[switch(param2)]==leg],
                     # name = [leg, mat['IPP'][mat[switch(param2)]==leg]], visible = (i==1)))
+                    name=leg, visible=(i == 0)))
+            fig2.add_trace(
+                go.Scatter(
+                    x=mat['DATEINTERV'][mat[switch(param2)] == leg],
+                    y=tt,
                     name=leg, visible=(i == 0)))
 
         args = [False] * t_curves
@@ -118,6 +129,10 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                        method="update",
                        args=[{"visible": args}])
         buttons1.append(button1)
+        ytot = mat['DOSE Gycm2']
+        ttot = mat['TEMPS (s)']
+        stats_list.append([year, button, 'TOTAL', len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),round(ttot.mean(), 3), round(ttot.std(), 3), round(ttot.median(), 3)])
+
 
     fig3.update_layout(updatemenus=[dict(active=0,
                                          type="dropdown",
@@ -148,15 +163,41 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
 
     fig3.show()
 
-    # ytot = mat['DOSE Gycm2']
-    # stats_list.append([year, button, 'TOTAL', len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),
-    #      round(np.percentile(ytot, 75), 3)])
-    stats= pd.DataFrame(stats_list)
-    stats.columns = ['Annee', switch(param1), switch(param2), 'Nbtotal', 'Moyenne Gycm2', 'EcartType','Median Gycm2']
-    # , '75%centile']
+    fig2.update_layout(updatemenus=[dict(active=0,
+                                         type="dropdown",
+                                         buttons=buttons1,
+                                         x=0,
+                                         y=1.1,
+                                         xanchor='left',
+                                         yanchor='bottom'
+                                         ),
+                                    ])
 
+    fig2.update_yaxes(
+        title_text="TEMPS (s)",
+        title_standoff=25)
+
+    fig2.update_layout(
+        autosize=True,
+        # width=1000,
+        # height=800,
+        title_text="NRL année " + str(year) + ', ',
+        title_x=0.5)
+
+    fig2.update_layout(
+        autosize=False,
+        width=1000,
+        height=800)
+
+    fig2.show()
+
+
+    stats= pd.DataFrame(stats_list)
+    stats.columns = ['Annee', switch(param1), switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)','Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)','Median(s)']
+    stats1=pd.DataFrame(stats_list1)
+    stats1.columns = ['Annee', switch(param1), switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)','Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)','Median(s)']
     ##table with mean, std, median, 75% percentile
-    stats_cols = stats.columns[-8:]
+    stats_cols = stats.columns[-11:]
     stats_leg = pd.DataFrame(stats[stats_cols])
     fig4 = go.Figure(go.Table(
         columnwidth=[80, 50],
@@ -164,12 +205,8 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                     fill_color='paleturquoise',
                     align='left'),
         cells={"values": stats_leg.T.values},
-        # fill_color='white',
-        # align='left'
-        # visible = True
     ))
 
-    # fig3 = go.Figure(go.Table(header={"values": stats_cols}, cells={"values": stats_leg.T.values}))
     fig4.update_layout(
         updatemenus=[
             {
@@ -197,7 +234,9 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
 
     fig4.show()
 
-    # fig3.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+".html")
-    # fig4.write_html("N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\figures\\" +switch(param1)+"-"+switch(param2)+ "_stats.html")
+    fig2.write_html(sys.path[0] + "\\results\\" + switch(param1) + "-" + switch(param2) + "\\" + str(yearmin) + "TEMPS.html")
+    fig3.write_html(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"PKS.html")
+    fig4.write_html(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.html")
+    stats1.to_excel(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.xlsx", sheet_name='Feuil1')
 
-    return stats 
+    return stats1

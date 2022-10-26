@@ -14,12 +14,15 @@
 
 #########################################" Faire ceci car la fusion de toutes les données a déjà été faite!
 import os
+import sys
 # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Pycharm"
 dir = "C:\\NRL\\Fork\\NRL"
 os.chdir(dir)
 import pandas as pd
-from pie_GENERAL import pie_GENERALf
 from fig_interactive_GENERAL import fig_int_GENERAL
+from pie_GENERAL import pie_GENERALf
+from suivi_GENERAL import suivi_GENERAL
+from boxplot_GENERAL import boxplot_GENERAL
 # from fig_interactive_ampli_med import fig_int_ampli_med
 # from fig_interactive_ampli_salle import fig_int_ampli_salle
 # from fig_interactive_interv2 import fig_int_int2
@@ -28,8 +31,8 @@ from fig_interactive_GENERAL import fig_int_GENERAL
 # from pie_nbtotal import pie_nb
 # from pie_medecins import pie_nb
 
-
-# dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
+# # #
+# # dir=r"N:\Themes\Radioprotection GHM\PYTHON_VSO\NRLs\EXTRACTION"
 # dir=r"C:\NRL\EXTRACTION"
 # os.chdir(dir)
 # fil='ALL_BLOC_CICI_2014-2022_RX.xlsx'
@@ -49,22 +52,36 @@ from fig_interactive_GENERAL import fig_int_GENERAL
 
 
 # Plot interactive
-year=[2022, 2022]
-param1='AMPLI'
-param2='NOMPRATICIEN'
-dir=r"C:\NRL\Fork\results"
-os.chdir(dir)
-
+param1='SALLE'
+param2='AMPLI'
+# y1=2022
+# path_new = os.path.join(sys.path[0]+"\\results", param1+"-"+param2)
+# os.mkdir(path_new)
+# for y1 in range(2021, 2022,1):
+# y2=y1
+# year=[y1, y2]
 # # # calculate stats+interactive plots OK
 # stats=fig_int_GENERAL(df, year, param1, param2)
-# # stats.to_excel('stats.xlsx', sheet_name='Feuil1')
 
+y1=2022
+dir=sys.path[0]+"\\results\\"+param1+"-"+param2
+os.chdir(dir)
 # read stats + pie plot
-stats=pd.read_excel ('stats.xlsx', 'Feuil1')
+stats=pd.read_excel (str(y1)+'_stats.xlsx', 'Feuil1')
 pie_GENERALf(stats)
 # http://127.0.0.1:8005/
 # #
-#
+# param1 = 'AMPLI'
+# param2 = 'CATEGORY'
+# y1=2014
+# y2=2021
+# suivi_GENERAL([y1, y2], param1, param2)
+
+
+# boxplot_GENERAL(df, [y1, y2], param1, param2)
+
+
+
 # # #doses 1 intervention all this works!
 # year=[2022, 2022]
 # interv='Cimentoplastie'
@@ -74,13 +91,7 @@ pie_GENERALf(stats)
 # interv='Pacemaker double'
 # year=[2014, 2020]
 # stats=fig_int_int(df, year, interv)
-# #
-#
-# #medecins
-# stats_med=fig_int_ampli_med(df, year)
-# pie_nb(stats, 2022, column)
-# http://127.0.0.1:8050/
-#
+
 
 
 
