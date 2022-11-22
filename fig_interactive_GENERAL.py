@@ -41,6 +41,8 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
     def switch(parameter):
         if parameter == "AMPLI":
             return "AMPLI"
+        elif parameter == "MOTIF_corr":
+            return "MOTIF_corr"
         elif parameter == "CATEGORY":
             return "CATEGORY"
         elif parameter == "SALLE":

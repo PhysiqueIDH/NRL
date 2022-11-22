@@ -64,7 +64,7 @@ intervs=np.unique(df['MOTIF_corr'].astype(str))
 #etude de gynécologues de la formation
 dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\spyder" 
 os.chdir(dir)
-from plot_data_chir import plot_dataf
+from pie_GENERAL_1param import plot_dataf
 # Ctrl+I in front of it, either on the Editor or the 
 medecin=['Dr VERAN Camille', 'VERAN CAMILLE', 'Dr IOAN Bianca', 'IOAN BIANCA', 'Dr VIDAL Clementine', 'VIDAL CLEMENTINE', 'Dr FIZE Corinne', 'FIZE CORINNE', 'Dr GOUPIL Cecile', 'GOUPIL CECILE']
 medecin=['Dr IOAN Bianca']
