@@ -123,32 +123,32 @@ def fig_int_GENERAL_1param(df, year, param2, interv=None):
                 y=tt,
                 name=leg, visible=(i == 0)))
 
-    args = [False] * t_curves
-    args[l_curve:i * len(legend_list) + len(legend_list)] = [True] * len(legend_list)
+    # args = [False] * t_curves
+    # args[l_curve:i * len(legend_list) + len(legend_list)] = [True] * len(legend_list)
     # args[l_curve:len(legend_list)+l_curve] = [True] * len(legend_list) #also works
     # i is an iterable used to tell our "args" list which value to set to True
     # i += 1
     # l_curve += len(legend_list)
 
-    button1 = dict(label='NbTotal',
-                   method="update",
-                   args=[{"visible": args}])
-    buttons1.append(button1)
+    # button1 = dict(label='NbTotal',
+    #                method="update",
+    #                args=[{"visible": args}])
+    # buttons1.append(button1)
     ytot = mat['DOSE Gycm2']
     ttot = mat['TEMPS (s)']
     stats_list.append(
         [year, 'TOTAL', len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),
          round(ttot.mean(), 3), round(ttot.std(), 3), round(ttot.median(), 3)])
 
-    fig3.update_layout(updatemenus=[dict(active=0,
-                                         type="dropdown",
-                                         buttons=buttons1,
-                                         x=0,
-                                         y=1.1,
-                                         xanchor='left',
-                                         yanchor='bottom'
-                                         ),
-                                    ])
+    # fig3.update_layout(updatemenus=[dict(active=0,
+    #                                      type="dropdown",
+    #                                      buttons=buttons1,
+    #                                      x=0,
+    #                                      y=1.1,
+    #                                      xanchor='left',
+    #                                      yanchor='bottom'
+    #                                      ),
+    #                                 ])
 
     fig3.update_yaxes(
         title_text="PDS (Gycm2=100µGym2)",
@@ -169,15 +169,15 @@ def fig_int_GENERAL_1param(df, year, param2, interv=None):
 
     fig3.show()
 
-    fig2.update_layout(updatemenus=[dict(active=0,
-                                         type="dropdown",
-                                         buttons=buttons1,
-                                         x=0,
-                                         y=1.1,
-                                         xanchor='left',
-                                         yanchor='bottom'
-                                         ),
-                                    ])
+    # fig2.update_layout(updatemenus=[dict(active=0,
+    #                                      type="dropdown",
+    #                                      buttons=buttons1,
+    #                                      x=0,
+    #                                      y=1.1,
+    #                                      xanchor='left',
+    #                                      yanchor='bottom'
+    #                                      ),
+    #                                 ])
 
     fig2.update_yaxes(
         title_text="TEMPS (s)",
@@ -200,9 +200,9 @@ def fig_int_GENERAL_1param(df, year, param2, interv=None):
     stats = pd.DataFrame(stats_list)
     stats.columns = ['Annee',  switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)',
                      'Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)', 'Median(s)']
-    stats1 = pd.DataFrame(stats_list1)
-    stats1.columns = ['Annee', switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)',
-                      'Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)', 'Median(s)']
+    # stats1 = pd.DataFrame(stats_list1)
+    # stats1.columns = ['Annee', switch(param2), 'Nbtotal', 'PKS_moyen(Gycm2)', 'EcartType(Gycm2)',
+    #                   'Median(Gycm2)', 'Temps_moyen(s)', 'EcartType(s)', 'Median(s)']
     ##table with mean, std, median, 75% percentile
     stats_cols = stats.columns[-11:]
     stats_leg = pd.DataFrame(stats[stats_cols])
@@ -214,30 +214,30 @@ def fig_int_GENERAL_1param(df, year, param2, interv=None):
         cells={"values": stats_leg.T.values},
     ))
 
-    fig4.update_layout(
-        updatemenus=[
-            {
-                "y": 1 - (i / 5),
-                "buttons": [
-                    {
-                        "label": button,
-                        "method": "restyle",
-                        "args": [
-                            {
-                                "cells": {
-                                    "values": stats_leg.loc[stats_leg[menu].eq(button)].T.values
-                                    # if leg == "All"
-                                    # else  stats_leg.loc[stats_leg[menu].eq(c)].T.values
-                                }
-                            }
-                        ],
-                    }
-                    for button in stats_leg[menu].unique().tolist()
-                ],
-            }
-            # for i, menu in enumerate([switch(param1)])
-        ]
-    )
+    # fig4.update_layout(
+    #     updatemenus=[
+    #         {
+    #             "y": 1 - (i / 5),
+    #             # "buttons": [
+    #             #     {
+    #             #         "label": button,
+    #             #         "method": "restyle",
+    #                     "args": [
+    #                         {
+    #                             "cells": {
+    #                                 "values": stats_leg.loc[stats_leg].T.values
+    #                                 # if leg == "All"
+    #                                 # else  stats_leg.loc[stats_leg[menu].eq(c)].T.values
+    #                             }
+    #                         }
+    #                     ],
+    #                 # }
+    #                 # for button in stats_leg[menu].unique().tolist()
+    #             # ],
+    #         }
+    #         # for i, menu in enumerate([switch(param1)])
+    #     ]
+    # )
 
     fig4.show()
 
@@ -247,8 +247,8 @@ def fig_int_GENERAL_1param(df, year, param2, interv=None):
         sys.path[0] + "\\results\\" + switch(param2) + "\\" + str(yearmin) + "PKS.html")
     fig4.write_html(
         sys.path[0] + "\\results\\" + switch(param2) + "\\" + str(yearmin) + "_stats.html")
-    stats1.to_excel(
+    stats.to_excel(
         sys.path[0] + "\\results\\" + switch(param2) + "\\" + str(yearmin) + "_stats.xlsx",
         sheet_name='Feuil1')
 
-    return stats1
+    return stats

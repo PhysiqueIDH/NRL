@@ -18,10 +18,11 @@ def dictionnairef (df):
     types_corr= tuple(types)
     np.array(types)
     
-    dictionn= pd.read_excel ('dictionnaire_interventions_bloc+laurent.xlsx', 'Feuil1')
+    dictionn= pd.read_excel ('dictionnaire_interventions_bloc+laurent_pellet.xlsx', 'Feuil1')
     com=list(dictionn.loc[:,'com'])
     replace=list(dictionn.loc[:,'replace'])
     categ=list(dictionn.loc[:,'catégorie'])
+    cond = list(dictionn.loc[:, 'condition'])
 
     types_corr=[]
     # i=0
@@ -34,8 +35,11 @@ def dictionnairef (df):
                 for s in range(0, len(com)):                
                     if unidecode(com[s].lower()) in unidecode(typ.lower()) and ii==0:
                         ii+=1
-                        # types_corr.append((typ, i, com[s], s, replace[s], categ[s]))
-                        types_corr.append((typ, i, com[s], replace[s], categ[s]))
+                        if type(cond[s])==str:
+                            if com[s] == 'boitier' and (len(set(matrix['NOMPRATICIEN'].iloc[i].split())&(set(cond[s].split())))!=0): #on va chercher à faire différence selon médecin
+                                types_corr.append((typ, i, com[s], s, replace[s], categ[s]))
+                        else:
+                            types_corr.append((typ, i, com[s], s, replace[s], categ[s]))
                 if ii==0:
                     types_corr.append((typ, i, 'lala', 'lala', 'lala'))                
             else:

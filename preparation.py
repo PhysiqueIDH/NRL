@@ -7,7 +7,7 @@ Created on Mon Mar 21 10:09:23 2022
 def preparation():
     # %autoreload
     import os
-    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\spyder" 
+    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Fork\\NRL"
     # dir="C:\\test_NRI\\spyder" 
     os.chdir(dir)
     # #A UTILISER POUR AVOIR UN SEUL EXCEL EXTRACTION
@@ -65,7 +65,7 @@ def preparation():
     # dfTOT=dfTOT.drop("Unnamed: 0",axis=1)
     
     import os
-    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\spyder" 
+    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION"
     # dir="C:\\test_NRI\\spyder" 
     os.chdir(dir)
     
