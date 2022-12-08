@@ -6,7 +6,7 @@ Created on Mon Sep 13 16:18:44 2021
 """
 def fusion_extractionf():
     import os
-    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION\\2019-2022"
+    dir="U:\\PYTHON_VSO\\NRLs\\EXTRACTION\\2019-2022"
     os.chdir(dir)
     import pandas as pd
     # get data file names

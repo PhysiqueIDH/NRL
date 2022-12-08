@@ -37,17 +37,17 @@ def dictionnairef (df):
                         ii+=1
                         if type(cond[s])==str:
                             if com[s] == 'boitier' and (len(set(matrix['NOMPRATICIEN'].iloc[i].split())&(set(cond[s].split())))!=0): #on va chercher à faire différence selon médecin
-                                types_corr.append((typ, i, com[s], s, replace[s], categ[s]))
+                                types_corr.append([typ, i, com[s], s, replace[s], categ[s]])
                         else:
-                            types_corr.append((typ, i, com[s], s, replace[s], categ[s]))
+                            types_corr.append([typ, i, com[s], s, replace[s], categ[s]])
                 if ii==0:
-                    types_corr.append((typ, i, 'lala', 'lala', 'lala'))                
+                    types_corr.append([typ, i, 'lala', 'lala', 'lala'])
             else:
-                types_corr.append((typ, i, 'nan', 'nan', 'nan'))
+                types_corr.append([typ, i, 'nan', 'nan', 'nan'])
         else:
-            types_corr.append((typ, i, 'nan', 'nan', 'nan'))
+            types_corr.append([typ, i, 'nan', 'nan', 'nan'])
                 
-    types_corr=np.array(types_corr)
+    # types_corr=np.array(types_corr)
     
     # # this option also works but is also longer!!
     # for i in range(0, len(types)):
@@ -63,22 +63,24 @@ def dictionnairef (df):
     #         types_corr.append((typ, i, 'nan', 'nan', 'nan'))
                 
     # types_corr=np.array(types_corr)
-    
+    types_corrdf=pd.DataFrame(types_corr)
     # ceux qui n'ont pas trouvé leur place dans dictionnaire
-    revoir = types_corr[np.array(np.where(types_corr[:,4] == 'lala')), :]
-    revoir_uni=np.unique(revoir)
+    # revoir = types_corrdf.iloc[np.array(np.where(types_corrdf.iloc[:,4] == 'lala')),:]
+    revoir = types_corrdf.loc[types_corrdf.iloc[:,4] == 'lala', :]
+    # revoir_uni=np.unique(revoir)
+    revoir_uni=revoir.drop_duplicates()
     # revoir_tout=matrix[np.array(np.where(types_corr[:,4] == 'lala')), :]
     # no_integers = np.delete(revoir_uni, np.where(revoir_uni[np.char.isdecimal(revoir_uni)].astype(int)))
     # dftest = pd.DataFrame(no_integers).T.transpose()
     # dftest.to_excel(excel_writer = "C:/test_NRI/spyder/test.xlsx")
     
        
-    types_corr_uni=np.unique(types_corr[:,3])
+    types_corr_uni=np.unique(types_corr[:][3])
     # types_corr_uni.to_excel("dic_net.xlsx")
                       
     # matrix['MOTIF_red']=types_corr[:,3]
-    matrix['MOTIF_corr']=types_corr[:,3]
-    matrix['CATEGORY']=types_corr[:,4]
+    matrix['MOTIF_corr']=types_corr[:][3]
+    matrix['CATEGORY']=types_corr[:][4]
     
     matrix['MOTIF_corr'][matrix['MOTIF']==matrix['MOTIF_corr']]= df['MOTIF']
 

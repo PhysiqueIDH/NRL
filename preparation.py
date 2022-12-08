@@ -7,7 +7,7 @@ Created on Mon Mar 21 10:09:23 2022
 def preparation():
     # %autoreload
     import os
-    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\Fork\\NRL"
+    dir="U:\\PYTHON_VSO\\NRLs\\Fork\\NRL"
     # dir="C:\\test_NRI\\spyder" 
     os.chdir(dir)
     # #A UTILISER POUR AVOIR UN SEUL EXCEL EXTRACTION
@@ -16,11 +16,11 @@ def preparation():
     # from fusion_EXTRACTION import fusion_extractionf
     # fusion_extractionf()
     # # import os
-    # dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\spyder" 
+    # dir="U:\\PYTHON_VSO\\NRLs\\spyder"
     
     from merge import mergef
     # # global df, dire, i_dose, i_sec, i_min, i_mot
-    dire="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION\\2019-2022"     
+    dire="U:\\PYTHON_VSO\\NRLs\\EXTRACTION\\2019-2022"
     os.chdir(dire)
     fil='All2019-2022.xlsx'
     sheet='Sheet1'
@@ -29,7 +29,7 @@ def preparation():
     
     os.chdir(dir)
     from read2018 import readf
-    dire="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION\\2018"     
+    dire="U:\\PYTHON_VSO\\NRLs\\EXTRACTION\\2018"
     os.chdir(dire)
     fil2='GENERAL2018TW.xlsx'
     sheet2='RAW DATA'
@@ -38,7 +38,7 @@ def preparation():
     
  #------------CICI
     import os
-    dire="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION\CICI" 
+    dire="U:\\PYTHON_VSO\\NRLs\\EXTRACTION\CICI"
     # dire='C:\\test_NRI\\CICI'
     os.chdir(dire)
     fil3='2014-2022.xlsx'
@@ -65,7 +65,7 @@ def preparation():
     # dfTOT=dfTOT.drop("Unnamed: 0",axis=1)
     
     import os
-    dir="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION"
+    dir="U:\\PYTHON_VSO\\NRLs\\EXTRACTION"
     # dir="C:\\test_NRI\\spyder" 
     os.chdir(dir)
     
