@@ -109,8 +109,8 @@ def mergef(fil, sheet):
     if 'Procédure.Nom de famille' in df_top:
         df['NOM']=df['Procédure.Nom de famille']
 
-    if 'Procédure.Procédure.ID' in df_top:
-        df['IPP']=df['Procédure.Procédure.ID']
+    if 'Procédure.IPP' in df_top:
+        df['IPP']=df['Procédure.IPP']
         
     
     df_top = list(df.columns)

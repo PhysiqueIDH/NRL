@@ -33,7 +33,8 @@ def dose_corrf(ampli):
         '1-CHAMPO':lambda:0.01,#1µGym2=0.01Gycm2 
         '1 - Champollion':lambda:1,#1µGym2=0.01Gycm2 'Siemens (µGym²) mais en hemolia donné en Gycm2 direct
         '2 - Stendhal':lambda:1,#1µGym2=0.01Gycm2 'Siemens (µGym²)
-        '3 - Berlioz':lambda:1,#1µGym2=0.01Gycm2 'Siemens (µGym²)    
+        '3 - Berlioz':lambda:1,#1µGym2=0.01Gycm2 'Siemens (µGym²)
+        'Berlioz': lambda: 1,  # 1µGym2=0.01Gycm2 'Siemens (µGym²)
                 }
     func=switcher.get(ampli,lambda:'Invalid')
     return func() 

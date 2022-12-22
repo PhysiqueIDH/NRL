@@ -12,6 +12,7 @@ def pie_GENERAL_1paramf(stats):
 
     df_pie = stats.iloc[:-1 , :]
     year=df_pie['Annee'][0][1:-1].split(', ')
+    # year = df_pie['Annee'][0]
     if year[0]==year[-1]:
         year=year[0]
     param1=df_pie.columns[2]

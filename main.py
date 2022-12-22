@@ -3,15 +3,15 @@
 # %reload_ext autoreload
 
 # #
-import os
-import os
-import sys
-dir="U:\\PYTHON_VSO\\NRLs\\Fork\\NRL"
-# dir=r"C:\test_NRI\spyder"
-os.chdir(dir)
-# preparation de la base de données
-from preparation import preparation
-df=preparation()
+#
+# import os
+# import sys
+# dir="U:\\PYTHON_VSO\\NRLs\\Fork\\NRL"
+# # dir=r"C:\test_NRI\spyder"
+# os.chdir(dir)
+# # preparation de la base de données
+# from preparation import preparation
+# df=preparation()
 
 
 #########################################" Faire ceci car la fusion de toutes les données a déjà été faite!
@@ -56,26 +56,28 @@ df=df.drop("Unnamed: 0",axis=1)
 #
 # # Plot interactive
 param1='AMPLI'
-param2='MOTIF_corr'
+param2='CATEGORY'
 y1=2021
-path_new = os.path.join(sys.path[0]+"\\results", param1+"-"+param2)
-# path_new = os.path.join(sys.path[0]+"\\results", param1)
-# os.mkdir(path_new)
+path="U:\\PYTHON_VSO\\NRLs\\Fork\\NRL"
+# path_new = os.path.join(path+"\\results\\", param1+"-"+param2)
+path_new = os.path.join(sys.path[0]+"\\results", param1)
+if not os.path.exists(path_new):
+    os.mkdir(path_new)
 # for y1 in range(2021, 2022,1):
 y2=y1
 year=[y1, y2]
 # # # calculate stats+interactive plots OK
-stats=fig_int_GENERAL(df, year, param1, param2)
+# stats=fig_int_GENERAL(df, year, param1, param2)
 # stats=fig_int_GENERAL_1param(df, year, param1)
 # dir=sys.path[0]+"\\results\\"+param1
 # y1=2021
-dir=sys.path[0]+"\\results\\"+param1+"-"+param2
-os.chdir(dir)
+# dir=path+param1+"-"+param2
+os.chdir(path_new)
 # # read stats + pie plot
 stats=pd.read_excel (str(y1)+'_stats.xlsx', 'Feuil1')
-pie_GENERALf(stats)
-# pie_GENERAL_1paramf(stats)
-a
+# pie_GENERALf(stats)
+pie_GENERAL_1paramf(stats)
+# a
 # http://127.0.0.1:8005/
 # #
 # param1 = 'AMPLI'

@@ -37,5 +37,5 @@ def ampli_corrf(ampli):
         'ENDO3': lambda:'Endoscopie',
         'ENDO4': lambda:'Endoscopie',
                 }
-    func=switcher.get(ampli,lambda:'Invalid')
+    func=switcher.get(ampli,lambda:'NaN')
     return func() 

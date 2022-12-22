@@ -81,17 +81,22 @@ def preparation():
     dfTOT['DOSE Gycm2']=dfTOT['DOSE']
     dfTOT=dfTOT.dropna(subset = ['DOSE'])
     dfTOT['AMPLI']=dfTOT['AMPLI'].replace(to_replace="Pas d'amplificateur", value=np.nan)
+    dfTOT['AMPLI'] = dfTOT['AMPLI'].replace(to_replace="Invalid", value=np.nan)
+    dfTOT=dfTOT.dropna(subset = ['AMPLI'])
+    dfTOT = dfTOT.dropna(subset=['SALLE'])
     amplis=np.unique(dfTOT['AMPLI'].astype(str))
+    # amplisdf=pd.DataFrame(amplis)
+    #     amplisdfg=amplisdf.drop(amplisdf =='nan')
     salle=np.unique(dfTOT['SALLE'].astype(str))
     for a in amplis:
         idc=dose_corrf(a)   
         im=dfTOT.index[dfTOT['AMPLI'] == a].tolist()          
         dfTOT['DOSE Gycm2'][im]=dfTOT['DOSE'][im]*idc #Gycm2  
         dfTOT['AMPLI']=dfTOT['AMPLI'].replace(to_replace=a, value=ampli_corrf(a))
-    for s in salle:          
+    for s in salle[:-1]:
         dfTOT['SALLE']=dfTOT['SALLE'].replace(to_replace=s, value=salle_corrf(s))    
     
-    sallec=np.unique(dfTOT['AMPLI'].astype(str))
+    # sallec=np.unique(dfTOT['AMPLI'].astype(str))
     
     dfTOT.loc[dfTOT['SALLE']=='Berlioz','AMPLI']='Berlioz'
     dfTOT.loc[dfTOT['SALLE']=='Champollion','AMPLI']='Champollion'
@@ -99,7 +104,7 @@ def preparation():
             
     
        
-    dire="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION"
+    dire="U:\\PYTHON_VSO\\NRLs\\EXTRACTION"
     os.chdir(dire)
     dfTOT.to_excel("ALL_2014-2022.xlsx")
     # dfTOT.to_excel("ALL_BLOC_CICI_2018-2022.xlsx")

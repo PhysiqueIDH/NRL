@@ -70,14 +70,24 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
     button_l = list(mat_i[switch(param1)].unique())
     button_list = list(filter(lambda x: str(x) != 'nan' and str(x) != 'null', button_l))
 
+    # buttons_date1 = []
+    # button_date_l = list(mat_i['DATEINTERV'].dt.year.unique())
+    # button_date_list = list(filter(lambda x: str(x) != 'nan' and str(x) != 'null', button_date_l))
+
+
     t_curves = 0
+    # for button_date in button_date_list:
+    #     matt = mat_i[mat_i['DATEINTERV'].dt.year == button_date]
     for button in button_list:
-        mat = mat_i[mat_i[switch(param1)] == button]
+        mat=mat_i[mat_i[switch(param1)] == button]
         legend_list = list(mat[switch(param2)].unique())
         t_curves += len(legend_list)
     args = [False] * t_curves
 
     l_curve = 0
+    # for button_date in button_date_list:
+    #     matt = []
+    #     matt =  mat_i[mat_i['DATEINTERV'].dt.year == button_date]
     for button in button_list:
 
         mat = []
@@ -113,7 +123,7 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                     y=yy,
                     # y = mat['TEMPS (s)'][mat[switch(param2)]==leg],
                     # name = [leg, mat['IPP'][mat[switch(param2)]==leg]], visible = (i==1)))
-                    name=leg, visible=(i == 0)))
+                    name=leg, visible=(i == 0), text=mat['MOTIF'][mat[switch(param2)]== leg]))
             fig2.add_trace(
                 go.Scatter(
                     x=mat['DATEINTERV'][mat[switch(param2)] == leg],
@@ -135,6 +145,9 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
         ttot = mat['TEMPS (s)']
         stats_list.append([year, button, 'TOTAL', len(ytot), round(ytot.mean(), 3), round(ytot.std(), 3), round(ytot.median(), 3),round(ttot.mean(), 3), round(ttot.std(), 3), round(ttot.median(), 3)])
 
+        # button_date1 = dict(label=str(button_date), method="update")
+        # buttons_date1.append(button_date1)
+
 
     fig3.update_layout(updatemenus=[dict(active=0,
                                          type="dropdown",
@@ -143,8 +156,18 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                                          y=1.1,
                                          xanchor='left',
                                          yanchor='bottom'
-                                         ),
-                                    ])
+                                         )
+                                    ]
+                       )
+
+    # fig3.update_xaxes(
+    #     rangeslider_visible=True,
+    #     rangeselector=dict(
+    #                     buttons=list([
+    #                         dict(count=1, label=str(button_date), step="year", stepmode="backward", visible=True)
+    #                                 ])
+    #                         )
+    # )
 
     fig3.update_yaxes(
         title_text="PDS (Gycm2=100µGym2)",
@@ -155,7 +178,7 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
         autosize=True,
         # width=1000,
         # height=800,
-        title_text="NRL année " + str(year) + ', ',
+        title_text="NRL année " + str(year),
         title_x=0.5)
 
     fig3.update_layout(
@@ -172,8 +195,9 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
                                          y=1.1,
                                          xanchor='left',
                                          yanchor='bottom'
-                                         ),
-                                    ])
+                                         )
+                                    ]
+                       )
 
     fig2.update_yaxes(
         title_text="TEMPS (s)",
@@ -236,9 +260,10 @@ def fig_int_GENERAL(df, year, param1, param2, interv=None):
 
     fig4.show()
 
-    fig2.write_html(sys.path[0] + "\\results\\" + switch(param1) + "-" + switch(param2) + "\\" + str(yearmin) + "TEMPS.html")
-    fig3.write_html(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"PKS.html")
-    fig4.write_html(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.html")
-    stats1.to_excel(sys.path[0]+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.xlsx", sheet_name='Feuil1')
+    # path= "U:\\PYTHON_VSO\\NRLs\\Fork\\NRL"
+    # fig2.write_html(path + "\\results\\" + switch(param1) + "-" + switch(param2) + "\\" + str(yearmin) + "TEMPS.html")
+    # fig3.write_html(path+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"PKS.html")
+    # fig4.write_html(path+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.html")
+    # stats1.to_excel(path+"\\results\\"+switch(param1)+"-"+switch(param2)+"\\"+str(yearmin)+"_stats.xlsx", sheet_name='Feuil1')
 
     return stats1

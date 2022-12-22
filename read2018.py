@@ -7,7 +7,7 @@ Created on Mon Aug 30 19:38:28 2021
 
 def readf(fil2, sheet2):
     import os
-    dire="N:\\Themes\\Radioprotection GHM\\PYTHON_VSO\\NRLs\\EXTRACTION\\2018"
+    dire="U:\\PYTHON_VSO\\NRLs\\EXTRACTION\\2018"
     os.chdir(dire)
     
     import pandas as pd
